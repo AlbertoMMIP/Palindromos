@@ -29,8 +29,7 @@
                     <div class="panel panel-body">
                         <div class="row">
                             <div class="col-lg-8">
-                                <%--<asp:FileUpload runat="server" ID="FileLoad" CssClass="form-control"  />--%>
-                                <input type="file" id="FileLoad" onchange="GetInputValue(this.value);" class="form-control" />
+                                <asp:FileUpload runat="server" ID="FileLoad" CssClass="form-control"  />                                
                                 <asp:HiddenField runat="server" ID="nombreArchivo" />
                             </div>
                             <div class="col-lg-4">
@@ -41,7 +40,7 @@
                         <asp:Panel runat="server" ID="PnlError" Visible="false">
                             <div class="alert alert-warning" role="alert">
                                 <strong>Error!   </strong> <asp:Label runat="server" ID="LblError" Text="  Debe seleccionar un archivo"></asp:Label>
-                                <asp:LinkButton runat="server" ID="BtnCerrar" CssClass="btn btn-danger" OnClick="BtnCerrar_Click"><span class="glyphicon glyphicon-remove"></span> </asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="BtnCerrar" CssClass="btn btn-danger" OnClick="BtnCerrar_Click"><span class="glyphicon glyphicon-remove" style="align-items:flex-end"></span> </asp:LinkButton>
                             </div>
                         </asp:Panel>
                         <br />

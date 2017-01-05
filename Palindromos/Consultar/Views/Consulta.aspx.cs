@@ -21,8 +21,7 @@ namespace Consultar.Views
         }
         protected void lnkComprobar_Click(object sender, EventArgs e)
         {
-            var rutaArchivo = nombreArchivo.Value;
-            if (!String.IsNullOrEmpty(rutaArchivo))
+            if(FileLoad.HasFile)
                 ProcesaArchivo();
             else
                 PnlError.Visible = true;
@@ -30,36 +29,34 @@ namespace Consultar.Views
 
         private void ProcesaArchivo()
         {
-            //Stream myStream;
-            //Int32 fileLen;
-            StringBuilder displayString = new StringBuilder();
-            string line = "";
-
-            System.IO.StreamReader file = new System.IO.StreamReader(@""+ nombreArchivo.Value+ "");
-            while ((line = file.ReadLine()) != null)
+            StringBuilder texto = new StringBuilder();
+            string doc = String.Empty;
+            using (StreamReader sr = new StreamReader(FileLoad.FileContent))
             {
-                displayString.Append(line);
+                doc = sr.ReadToEnd();
             }
-            //// Get the length of the file.
-            //fileLen = FileLoad.PostedFile.ContentLength;
+            string[] lineas = doc.Split('\n');
+            foreach(string linea in lineas)
+            {
+                texto.Append("<li>"+linea+" -> " + esPalindromo(linea.Trim().Replace(" ","").ToUpper())+ "</li>");
+            }
 
-            //// Create a byte array to hold the contents of the file.
-            //Byte[] Input = new Byte[fileLen];
 
-            //// Initialize the stream to read the uploaded file.
-            //myStream = FileLoad.FileContent;
-            //// Read the file into the byte array.
-            //myStream.Read(Input, 0, fileLen);
+            Resultados.Text = texto.ToString();
+        }
 
-            // Copy the byte array to a string.
-            //for (int loop1 = 0; loop1 < fileLen; loop1++)
-            //{
-            //    displayString.Append(Input[loop1].ToString());
-            //}
+        private string esPalindromo(string linea)
+        {
+            string resultado = "False", cadInv = String.Empty;
+            int longCad = linea.Length;
 
-            // Display the contents of the file in a 
-            // textbox on the page.
-            Resultados.Text = displayString.ToString();
+            for(int i=longCad-1;i>=0;i--)
+            {
+                cadInv = cadInv + linea.Substring(i, 1);
+            }
+            if(linea.Equals(cadInv))
+                resultado = "True";
+            return resultado;
         }
 
         protected void BtnCerrar_Click(object sender, EventArgs e)
